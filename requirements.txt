@@ -1,0 +1,21 @@
+# CAD Converter API Dependencies
+# Authors: Josh Ayokhai & River
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# HTTP Client
+httpx==0.25.1
+
+# CAD Processing
+cadquery==2.4.0
+ocp-freecad==7.7.2
+trimesh==4.0.5
+
+# 3D File Formats
+pygltflib==1.16.1
+
+# Environment Configuration
+python-dotenv==1.0.0

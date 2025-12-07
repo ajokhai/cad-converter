@@ -1,0 +1,25 @@
+# Render.com deployment configuration
+# Authors: Josh Ayokhai & River
+# GitHub: https://github.com/ajokhai/cad-converter
+
+services:
+  - type: web
+    name: cad-converter
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: MAX_FILE_SIZE_MB
+        value: 100
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: GITHUB_USERNAME
+        value: ajokhai
+      - key: GITHUB_REPO
+        value: cad-converter
+      - key: PROJECT_AUTHORS
+        value: "Josh Ayokhai, River"
+      # Add your custom variables in Render dashboard:
+      # - SITE_URL
+      # - OPENROUTER_API_KEY (optional)
+      # - DEFAULT_AI_MODEL (optional)
