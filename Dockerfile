@@ -2,27 +2,29 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Update package list and install dependencies in one layer with error handling
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        libgl1 \
-        libglib2.0-0 \
-        libsm6 \
-        libxext6 \
-        libxrender1 \
-        libgomp1 \
-    && apt-get clean \
+# Install system dependencies including OpenCascade
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    libfreetype6 \
+    libocct-data-exchange-7.6 \
+    libocct-draw-7.6 \
+    libocct-foundation-7.6 \
+    libocct-modeling-algorithms-7.6 \
+    libocct-modeling-data-7.6 \
+    libocct-ocaf-7.6 \
+    libocct-visualization-7.6 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-
-# Install Python packages with increased timeout
-RUN pip install --no-cache-dir --timeout=1000 -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .
 
-# Use PORT environment variable (Render provides this)
-ENV PORT=8080
 EXPOSE 8080
 
-CMD uvicorn app:app --host 0.0.0.0 --port $PORT
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
